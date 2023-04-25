@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      dockerfile:
+        app_web/configs/Dockerfile
+    ports:
+      - "6589:6589"
+    network_mode: "host"
