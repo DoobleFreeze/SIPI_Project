@@ -39,6 +39,9 @@ JSON_SUCCESS_POST = {  # 200
     'detail': 'Request data accepted for processing'
 }
 
+LOG_ERROR = 'An error occurred with the {FUNC}: {ERROR}'
+LOG_ERROR_DETAILS = 'Error details:\n{ERROR}'
+
 
 # <-- Функции заполнения сложных шаблонов --> #
 def create_json_error_bad_request(error: str) -> dict:
