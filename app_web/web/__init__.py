@@ -1,5 +1,7 @@
 from flask import Flask, make_response, jsonify
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from .database import db_session
+from .database import __all_models as al
 
 logger = None
 operator = None
@@ -14,6 +16,8 @@ def create_api(flask_log,
     global logger, operator
 
     app = Flask(__name__)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
 
     # Инициализация логирования
     from .initialization_logger import get_logger
@@ -42,6 +46,12 @@ def create_api(flask_log,
     from .handlers.global_values import JSON_ERROR_NOT_FOUND
 
     app.register_blueprint(static_control.module)
+    app.config['SECRET_KEY'] = 'rtu_mirea_ona_key'
+
+    @login_manager.user_loader
+    def load_user(user_id):  # Возвращает информацию о пользователе по его ID
+        s = db_session.create_session()
+        return s.query(al.users.Users).get(user_id)
 
     @app.errorhandler(404)
     def not_found(_error):
