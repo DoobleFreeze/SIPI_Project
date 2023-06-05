@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site__body">
+    <!-- .block-products-carousel -->
+    <div class="block block-products-carousel" data-layout="grid-4" data-mobile-grid-columns="2">
+        <div class="container mt-5">
+            <div class="block-header">
+                <h3 class="block-header__title">Услуги</h3>
+                <div class="block-header__divider"></div>
+                <ul class="block-header__groups-list">
+                    {% if is_rating %}
+                    <li>
+                        <a href="/static/sort_rating">
+                            <button type="button" class="block-header__groupd  block-header__group--active ">
+                                <div style="color:#333333">Рейтинг</div>
+                            </button>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static/sort_reviews">
+                            <button type="button" class="block-header__groupd ">
+                                <div style="color:#333333">Отзывы</div>
+                            </button>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static/sort_all">
+                            <button type="button" class="block-header__groupd ">
+                                <div style="color:#333333">Все</div>
+                            </button>
+                        </a>
+                    </li>
+                    {% elif is_reviews %}
+                    <li>
+                        <a href="/static/sort_rating">
+                            <button type="button" class="block-header__groupd ">
+                                <div style="color:#333333">Рейтинг</div>
+                            </button>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static/sort_reviews">
+                            <button type="button" class="block-header__groupd block-header__group--active ">
+                                <div style="color:#333333">Отзывы</div>
+                            </button>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static/sort_all">
+                            <button type="button" class="block-header__groupd ">
+                                <div style="color:#333333">Все</div>
+                            </button>
+                        </a>
+                    </li>
+                    {% elif is_all %}
+                    <li>
+                        <a href="/static/sort_rating">
+                            <button type="button" class="block-header__groupd ">
+                                <div style="color:#333333">Рейтинг</div>
+                            </button>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static/sort_reviews">
+                            <button type="button" class="block-header__groupd ">
+                                <div style="color:#333333">Отзывы</div>
+                            </button>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/static/sort_all">
+                            <button type="button" class="block-header__groupd block-header__group--active ">
+                                <div style="color:#333333">Все</div>
+                            </button>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <div class="block-header__arrows-list">
+                    <button class="block-header__arrow block-header__arrow--left" type="button">
+                        <svg width="7px" height="11px">
+                            <use xlink:href="images/sprite.svg#arrow-rounded-left-7x11"></use>
+                        </svg>
+                    </button>
+                    <button class="block-header__arrow block-header__arrow--right" type="button">
+                        <svg width="7px" height="11px">
+                            <use xlink:href="images/sprite.svg#arrow-rounded-right-7x11"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="block-products-carousel__slider">
+                <div class="block-products-carousel__preloader"></div>
+                <div class="owl-carousel">
+                    {% for item in orgs %}
+                    <div class="block-products-carousel__column">
+                        <div class="block-products-carousel__cell">
+                            <div class="product-card product-card--hidden-actions ">
+                                <div class="product-card__image product-image">
+                                    <a href="/static/organization/{{item['id']}}" class="product-image__body">
+                                        <img class="product-image__img" src="{{ item['image_path'] }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-card__info">
+                                    <div class="product-card__name">
+                                        <a href="/static/organization/{{item['id']}}">{{item['name']}}</a>
+                                    </div>
+                                    <div class="product-card__rating">
+                                        <div class="product-card__rating-stars">
+                                            <div class="rating">
+                                                <div class="rating__body">
+                                                    {% if item['rating'] >= 1 %}
+                                                    <svg class="rating__star rating__star--active" width="13px"
+                                                         height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% else %}
+                                                    <svg class="rating__star " width="13px" height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% endif %}
+                                                    {% if item['rating'] >= 2 %}
+                                                    <svg class="rating__star rating__star--active" width="13px"
+                                                         height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% else %}
+                                                    <svg class="rating__star " width="13px" height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% endif %}
+                                                    {% if item['rating'] >= 3 %}
+                                                    <svg class="rating__star rating__star--active" width="13px"
+                                                         height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% else %}
+                                                    <svg class="rating__star " width="13px" height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% endif %}
+                                                    {% if item['rating'] >= 4 %}
+                                                    <svg class="rating__star rating__star--active" width="13px"
+                                                         height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% else %}
+                                                    <svg class="rating__star " width="13px" height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% endif %}
+                                                    {% if item['rating'] >= 5 %}
+                                                    <svg class="rating__star rating__star--active" width="13px"
+                                                         height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% else %}
+                                                    <svg class="rating__star " width="13px" height="12px">
+                                                        <g class="rating__fill">
+                                                            <use xlink:href="images/sprite.svg#star-normal"></use>
+                                                        </g>
+                                                        <g class="rating__stroke">
+                                                            <use xlink:href="images/sprite.svg#star-normal-stroke"></use>
+                                                        </g>
+                                                    </svg>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-card__rating-legend">Отзывов: {{item['review']}}</div>
+                                    </div>
+                                </div>
+                                <div class="product-card__actions">
+                                    <div class="product-card__buttons">
+                                        <a href="/static/organization/{{item['id']}}">
+                                            <button class="btn btn-primary product-card__addtocart" type="button">
+                                                Запись
+                                            </button>
+                                        </a>
+                                        <a href="/static/organization/{{item['id']}}">
+                                            <button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist"
+                                                    type="button">
+                                                <svg width="16px" height="16px">
+                                                    <use xlink:href="images/sprite.svg#wishlist-16"></use>
+                                                </svg>
+                                                <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
