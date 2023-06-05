@@ -22,5 +22,6 @@ class Appointment(SqlAlchemyBase):
     org_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("organization.id"))
     org_user_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("users.id"), nullable=True)
 
-    users = orm.relationship('Users', backref="appointment")
+    user = orm.relationship('Users', foreign_keys=[user_id])
+    org_user = orm.relationship('Users', foreign_keys=[org_user_id])
     organization = orm.relationship('Organization', backref="appointment")

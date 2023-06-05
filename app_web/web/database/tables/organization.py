@@ -19,4 +19,4 @@ class Organization(SqlAlchemyBase):
     type_app_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("type_appointment.id"))
 
     users = orm.relationship('Users', backref="organization")
-    type_appointment = orm.relationship('type_appointment', backref="organization")
+    type_appointment = orm.relationship('TypeAppointment', backref="organization")
