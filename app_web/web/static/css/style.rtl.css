@@ -638,7 +638,7 @@ h6 {
   margin-right: 3px;
 }
 
-.block-header__group {
+.block-header__groupd {
   background: transparent;
   border: none;
   font-family: inherit;
@@ -652,10 +652,10 @@ h6 {
   -webkit-box-shadow: none;
           box-shadow: none;
 }
-.block-header__group:focus {
+.block-header__groupd:focus {
   outline: none;
 }
-.block-header__group:focus, .block-header__group:hover {
+.block-header__groupd:focus, .block-header__groupd:hover {
   -webkit-box-shadow: 0 0 0 2px #ebebeb inset;
           box-shadow: 0 0 0 2px #ebebeb inset;
   color: inherit;
