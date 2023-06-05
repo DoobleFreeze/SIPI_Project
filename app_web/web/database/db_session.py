@@ -31,10 +31,10 @@ def global_init(logger: logging.Logger, db_host, db_port, db_login, db_password)
     if __factory:
         return
 
-    conn_str = f'postgresql://{db_login}:{db_password}@{db_host}:{db_port}/sipi'
+    conn_str = f'postgresql://{db_login}:{db_password}@{db_host}:{db_port}/sipi_db'
     logger.info(f"Connecting to the database")
 
-    engine = sa.create_engine(conn_str, connect_args={'options': '-csearch_path=web_app'})
+    engine = sa.create_engine(conn_str)
     __factory = orm.sessionmaker(bind=engine)
 
     from . import __all_models
