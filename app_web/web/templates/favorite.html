@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site__body mt-5">
+    <div class="page-header">
+        <div class="page-header__container container">
+            <div class="page-header__title">
+                <h1>Избранное</h1>
+            </div>
+        </div>
+    </div>
+    <div class="cart block">
+        <div class="container">
+            <table class="cart__table cart-table">
+                <thead class="cart-table__head">
+                <tr class="cart-table__row">
+                    <th class="cart-table__column cart-table__column--product">Название</th>
+                    <th class="cart-table__column cart-table__column--price"></th>
+                    <th class="cart-table__column cart-table__column--quantity"></th>
+                    <th class="cart-table__column cart-table__column--total"></th>
+                    <th class="cart-table__column cart-table__column--remove"></th>
+                </tr>
+                </thead>
+                <tbody class="cart-table__body">
+                    {% for org in list_org %}
+                    <tr class="cart-table__row">
+                        <td class="cart-table__column cart-table__column--product">
+                            <a href="/static/organization/{{org['org_id']}}" class="cart-table__product-name">{{org['name']}}</a>
+                        </td>
+                        <td class="cart-table__column cart-table__column--price"></td>
+                        <td class="cart-table__column cart-table__column--price"></td>
+                        <td class="cart-table__column cart-table__column--remove"></td>
+                        <td class="cart-table__column cart-table__column--remove">
+                            <a href="/static/remove_favorite/{{org['org_id']}}">
+                                <button type="button" class="btn btn-light btn-sm">
+                                    Удалить
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

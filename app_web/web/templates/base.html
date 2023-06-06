@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
     <title>{{ title }}</title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="icon" type="image/png" href="/static/images/favicon.png">
     <!-- fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i">
     <!-- css -->
-    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="vendor/owl-carousel/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="vendor/photoswipe/photoswipe.css">
-    <link rel="stylesheet" href="vendor/photoswipe/default-skin/default-skin.css">
-    <link rel="stylesheet" href="vendor/select2/css/select2.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="fonts/stroyka/stroyka.css">
+    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/vendor/owl-carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/vendor/photoswipe/photoswipe.css">
+    <link rel="stylesheet" href="/static/vendor/photoswipe/default-skin/default-skin.css">
+    <link rel="stylesheet" href="/static/vendor/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="/static/fonts/stroyka/stroyka.css">
 </head>
 
 <body>
@@ -30,7 +30,7 @@
                 <div class="site-header__logo">
                     <a href="/static">
                         <!-- logo -->
-                        <img src="images/icons/logo.png" style="height: 80px;"/>
+                        <img src="/static/images/icons/logo.png" style="height: 80px;"/>
                         <!-- logo / end -->
                     </a>
                 </div>
@@ -45,7 +45,7 @@
                                 }}
                                 <button class="search__button" type="submit" name="search">
                                     <svg width="20px" height="20px">
-                                        <use xlink:href="images/sprite.svg#search-20"></use>
+                                        <use xlink:href="/static/images/sprite.svg#search-20"></use>
                                     </svg>
                                 </button>
                                 <div class="search__border"></div>
@@ -67,27 +67,36 @@
                             <!-- .nav-links -->
                             <div class="nav-panel__nav-links nav-links">
                                 <ul class="nav-links__list">
-                                    <li class="nav-links__item  nav-links__item--has-submenu ">
+                                    <li class="nav-links__item ">
                                         <a class="nav-links__item-link" href="/static">
                                             <div class="nav-links__item-body">
                                                 Главная
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="nav-links__item  nav-links__item--has-submenu ">
-                                        <a class="nav-links__item-link" href="/static">
+                                    <li class="nav-links__item ">
+                                        <a class="nav-links__item-link" href="/static/appointment">
                                             <div class="nav-links__item-body">
                                                 Записи
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="nav-links__item  nav-links__item--has-submenu ">
-                                        <a class="nav-links__item-link" href="/static">
+                                    <li class="nav-links__item ">
+                                        <a class="nav-links__item-link" href="/static/favorites">
                                             <div class="nav-links__item-body">
                                                 Избранное
                                             </div>
                                         </a>
                                     </li>
+                                    {% if is_organization %}
+                                    <li class="nav-links__item ">
+                                        <a class="nav-links__item-link" href="/static/organizations">
+                                            <div class="nav-links__item-body">
+                                                Организации
+                                            </div>
+                                        </a>
+                                    </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                             <!-- .nav-links / end -->
@@ -104,21 +113,21 @@
                             <!-- .nav-links -->
                             <div class="nav-panel__nav-links nav-links">
                                 <ul class="nav-links__list">
-                                    <li class="nav-links__item  nav-links__item--has-submenu ">
+                                    <li class="nav-links__item">
                                         <a class="nav-links__item-link" href="/static">
                                             <div class="nav-links__item-body">
                                                 Главная
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="nav-links__item  nav-links__item--has-submenu ">
+                                    <li class="nav-links__item ">
                                         <a class="nav-links__item-link" href="/static/login">
                                             <div class="nav-links__item-body">
                                                 Записи
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="nav-links__item  nav-links__item--has-submenu ">
+                                    <li class="nav-links__item ">
                                         <a class="nav-links__item-link" href="/static/login">
                                             <div class="nav-links__item-body">
                                                 Избранное
@@ -131,16 +140,16 @@
                             <div class="nav-panel__indicators">
                                 <div class="indicator">
                                     <a href="/static/login" class="indicator__button">
-                                            <span class="indicator__area">
-                                                Войти
-                                            </span>
+                                        <span class="indicator__area">
+                                            Войти
+                                        </span>
                                     </a>
                                 </div>
                                 <div class="indicator">
                                     <a href="/static/register" class="indicator__button">
-                                            <span class="indicator__area">
-                                                Регистрация
-                                            </span>
+                                        <span class="indicator__area">
+                                            Регистрация
+                                        </span>
                                     </a>
                                 </div>
                             </div>
@@ -195,7 +204,7 @@
                     <div class="totop__end">
                         <button type="button" class="totop__button">
                             <svg width="13px" height="8px">
-                                <use xlink:href="images/sprite.svg#arrow-rounded-up-13x8"></use>
+                                <use xlink:href="/static/images/sprite.svg#arrow-rounded-up-13x8"></use>
                             </svg>
                         </button>
                     </div>
@@ -250,17 +259,17 @@
 </div>
 <!-- photoswipe / end -->
 <!-- js -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="vendor/owl-carousel/owl.carousel.min.js"></script>
-<script src="vendor/nouislider/nouislider.min.js"></script>
-<script src="vendor/photoswipe/photoswipe.min.js"></script>
-<script src="vendor/photoswipe/photoswipe-ui-default.min.js"></script>
-<script src="vendor/select2/js/select2.min.js"></script>
-<script src="js/number.js"></script>
-<script src="js/main.js"></script>
-<script src="js/header.js"></script>
-<script src="vendor/svg4everybody/svg4everybody.min.js"></script>
+<script src="/static/vendor/jquery/jquery.min.js"></script>
+<script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/static/vendor/owl-carousel/owl.carousel.min.js"></script>
+<script src="/static/vendor/nouislider/nouislider.min.js"></script>
+<script src="/static/vendor/photoswipe/photoswipe.min.js"></script>
+<script src="/static/vendor/photoswipe/photoswipe-ui-default.min.js"></script>
+<script src="/static/vendor/select2/js/select2.min.js"></script>
+<script src="/static/js/number.js"></script>
+<script src="/static/js/main.js"></script>
+<script src="/static/js/header.js"></script>
+<script src="/static/vendor/svg4everybody/svg4everybody.min.js"></script>
 <script>
     svg4everybody();
 </script>

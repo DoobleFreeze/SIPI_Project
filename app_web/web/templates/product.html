@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site__body">
+    <div class="block">
+        <div class="container mt-5">
+            <div class="product product--layout--standard" data-layout="standard">
+                <div class="product__content">
+                    <!-- .product__gallery -->
+                    <div class="product__gallery">
+                        <div class="product-gallery">
+                            <div class="product-gallery__featured">
+                                <button class="product-gallery__zoom">
+                                    <svg width="24px" height="24px">
+                                        <use xlink:href="/static/images/sprite.svg#zoom-in-24"></use>
+                                    </svg>
+                                </button>
+                                <div class="owl-carousel" id="product-image">
+                                    {% for img in imgs %}
+                                    <div class="product-image product-image--location--gallery">
+                                        <a href="{{ img }}"
+                                           class="product-image__body" target="_blank">
+                                            <img class="product-image__img" src="{{ img }}" alt="">
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="product-gallery__carousel">
+                                <div class="owl-carousel" id="product-carousel">
+                                    {% for img in imgs %}
+                                    <a href="{{ img }}"
+                                       class="product-image product-gallery__carousel-item">
+                                        <div class="product-image__body">
+                                            <img class="product-image__img product-gallery__carousel-image"
+                                                 src="{{ img }}" alt="">
+                                        </div>
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .product__gallery / end -->
+                    <!-- .product__info -->
+                    <div class="product__info">
+                        <h1 class="product__name mb-2">{{ org_name }}</h1>
+                        <div class="product-card__rating mb-5">
+                            <div class="product-card__rating-stars">
+                                <div class="rating">
+                                    <div class="rating__body">
+                                        {% for i in range(1, 6) %}
+                                            {% if sum_rating >= i %}
+                                            <svg class="rating__star rating__star--active" width="13px"
+                                                 height="12px">
+                                                <g class="rating__fill">
+                                                    <use xlink:href="/static/images/sprite.svg#star-normal"></use>
+                                                </g>
+                                                <g class="rating__stroke">
+                                                    <use xlink:href="/static/images/sprite.svg#star-normal-stroke"></use>
+                                                </g>
+                                            </svg>
+                                            {% else %}
+                                            <svg class="rating__star " width="13px" height="12px">
+                                                <g class="rating__fill">
+                                                    <use xlink:href="/static/images/sprite.svg#star-normal"></use>
+                                                </g>
+                                                <g class="rating__stroke">
+                                                    <use xlink:href="/static/images/sprite.svg#star-normal-stroke"></use>
+                                                </g>
+                                            </svg>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-card__rating-legend">Отзывов: {{ count_review }}</div>
+                        </div>
+                        <div class="product__description mb-2">
+                            {{ org_description }}
+                        </div>
+                        <div class="product__description mb-2">
+                            Адрес: {{ org_address }}
+                        </div>
+                        <div class="product__description mb-2">
+                            Телефон: {{ org_number }}
+                        </div>
+                        <div class="product__description mb-5">
+                            Email: {{ org_email }}
+                        </div>
+                        <a href="/static/organization/{{ org_id }}/new_appointment">
+                            <button class="btn btn-primary btn-lg mr-1">Записаться</button>
+                        </a>
+                        <a href="/static/organization/{{ org_id }}/favorite">
+                            <button type="button" class="btn btn-secondary btn-svg-icon btn-lg"
+                                    data-toggle="tooltip" style="width: 165px;">
+                                В Избранное
+                            </button>
+                        </a>
+                    </div>
+                    <!-- .product__info / end -->
+                </div>
+                <!-- .product__end -->
+
+            </div>
+            <div class="product-tabs">
+                <div class="product-tabs__list">
+                    <div class="product-tabs__list-body">
+                        <div class="product-tabs__list-container container">
+                            <a href="#tab-description"
+                               class="product-tabs__item product-tabs__item--active">Отзывы</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-tabs__content">
+                    <div class="product-tabs__pane" id="tab-description">
+                        <div class="reviews-view">
+                            <div class="reviews-view__list">
+                                <div class="reviews-list">
+                                    <ol class="reviews-list__content">
+                                        {% for rev in list_review %}
+                                        <li class="reviews-list__item">
+                                            <div class="review">
+                                                <div class="review__avatar"><img
+                                                        src="{{ rev['img_path'] }}"
+                                                        alt=""></div>
+                                                <div class="review__content">
+                                                    <div class="review__author">{{ rev['name'] }}</div>
+                                                    <div class="review__rating">
+                                                        <div class="rating">
+                                                            <div class="rating__body">
+                                                                {% for i in range(1, 6) %}
+                                                                {% if rev['rating'] >= i %}
+                                                                <svg class="rating__star rating__star--active"
+                                                                     width="13px"
+                                                                     height="12px">
+                                                                    <g class="rating__fill">
+                                                                        <use xlink:href="/static/images/sprite.svg#star-normal"></use>
+                                                                    </g>
+                                                                    <g class="rating__stroke">
+                                                                        <use xlink:href="/static/images/sprite.svg#star-normal-stroke"></use>
+                                                                    </g>
+                                                                </svg>
+                                                                {% else %}
+                                                                <svg class="rating__star " width="13px" height="12px">
+                                                                    <g class="rating__fill">
+                                                                        <use xlink:href="/static/images/sprite.svg#star-normal"></use>
+                                                                    </g>
+                                                                    <g class="rating__stroke">
+                                                                        <use xlink:href="/static/images/sprite.svg#star-normal-stroke"></use>
+                                                                    </g>
+                                                                </svg>
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review__text">
+                                                        {{rev['comment']}}
+                                                    </div>
+                                                    <div class="review__date">{{rev['data_create']}}</div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <form class="reviews-view__form" action="" method="post">
+                                {{ form.hidden_tag() }}
+                                {{ form.csrf_token }}
+                                <h3 class="reviews-view__header">Написать отзыв</h3>
+                                <div class="row">
+                                    <div class="col-12 col-lg-9 col-xl-8">
+                                        <div class="form-group">
+                                            {{ form.stars.label }}
+                                            {{ form.stars(class="form-control") }}
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            {{ form.comment.label }}
+                                            {{ form.comment(class = "form-control", placeholder = "Ваш комментарий...", rows=6) }}
+                                        </div>
+                                        {{ form.submit(type = "submit", class = "btn btn-primary mt-4", value = "Опубликовать")}}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
