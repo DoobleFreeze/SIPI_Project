@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site__body">
+    <div class="page-header">
+        <div class="page-header__container container">
+            <div class="page-header__title">
+                <h1>Сотрудники</h1>
+            </div>
+        </div>
+    </div>
+    <div class="cart block">
+        <div class="container">
+            <table class="cart__table cart-table">
+                <thead class="cart-table__head">
+                <tr class="cart-table__row">
+                    <th class="cart-table__column cart-table__column--product">Аватарка</th>
+                    <th class="cart-table__column cart-table__column--product">ФИ</th>
+                    <th class="cart-table__column cart-table__column--product">Почта</th>
+                    <th class="cart-table__column cart-table__column--product">Телефон</th>
+                    <th class="cart-table__column cart-table__column--product"></th>
+                </tr>
+                </thead>
+                <tbody class="cart-table__body">
+                {% for empl in list_empl %}
+                    <tr class="cart-table__row">
+                        <td class="cart-table__column cart-table__column--product">
+                            <div class="review__avatar">
+                                <img src="{{ empl['img_path'] }}" alt="">
+                            </div>
+                        </td>
+                        <td class="cart-table__column cart-table__column--product">
+                            {{empl['user_name']}}
+                        </td>
+                        <td class="cart-table__column cart-table__column--product">{{empl['email']}}</td>
+                        <td class="cart-table__column cart-table__column--product">{{empl['phone_number']}}</td>
+                        <td class="cart-table__column cart-table__column--product">
+                            <a href="/static/organization_lid/{{org_id}}/employers_del/{{empl['user_id']}}">
+                                <button type="button" class="btn btn-light btn-sm">
+                                    Удалить
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.csrf_token }}
+                <h3>Пригласить сотрудника</h3>
+                <div class="form-group">
+                    {{ form.email.label }}
+                    {{ form.email(class = "form-control", placeholder = "Введите Почту") }}
+                </div>
+                {{ form.submit(type = "submit", class = "btn btn-primary") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

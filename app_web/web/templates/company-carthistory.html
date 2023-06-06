@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site__body mt-5">
+    <div class="page-header">
+        <div class="page-header__container container">
+            <div class="page-header__title">
+                <h1>История записей</h1>
+            </div>
+        </div>
+    </div>
+    <div class="cart block">
+        <div class="container">
+            <table class="cart__table cart-table">
+                <thead class="cart-table__head">
+                <tr class="cart-table__row">
+                    <th class="cart-table__column cart-table__column--product">Клиент</th>
+                    <th class="cart-table__column cart-table__column--product">Комментарий пользователя</th>
+                    <th class="cart-table__column cart-table__column--product">Контакты</th>
+                    <th class="cart-table__column cart-table__column--product">Дата и время</th>
+                    <th class="cart-table__column cart-table__column--product">Статус</th>
+                </tr>
+                </thead>
+                <tbody class="cart-table__body">
+                {% for app in list_apps %}
+                <tr class="cart-table__row">
+                    <td class="cart-table__column cart-table__column--product">{{app['user_name']}}</td>
+                    <td class="cart-table__column cart-table__column--product">{{app['user_comment']}}</td>
+                    <td class="cart-table__column cart-table__column--product">{{app['user_contact']}}</td>
+                    <td class="cart-table__column cart-table__column--product">{{app['app_time']}}</td>
+                    <td class="cart-table__column cart-table__column--product">{{app['status']}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

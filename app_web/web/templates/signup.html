@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site__body mt-5">
+    <div class="block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 d-flex flex-column">
+                    <div class="card flex-grow-1 mb-md-0">
+                        <div class="card-body">
+                            <h3 class="card-title">{{org_name}}</h3>
+                            <form action="" method="post">
+                                {{ form.hidden_tag() }}
+                                {{ form.csrf_token }}
+                                <div class="form-group">
+                                    {{ form.user_comment.label }}
+                                    {{ form.user_comment(class = "form-control", placeholder = "Ваш комментарий...", rows=6) }}
+                                </div>
+                                {{ form.submit(type = "submit", class = "btn btn-primary mt-4", value = "Записаться")}}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

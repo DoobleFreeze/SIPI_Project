@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site__body mt-5">
+    <div class="page-header">
+        <div class="page-header__container container">
+            <div class="page-header__title">
+                <h1>Записи</h1>
+                <a href="/static/organization_lid/{{org_id}}/appointments_history">История записей</a>
+            </div>
+        </div>
+    </div>
+    <div class="cart block">
+        <div class="container">
+            <table class="cart__table cart-table">
+                <thead class="cart-table__head">
+                    <tr class="cart-table__row">
+                        <th class="cart-table__column cart-table__column--product">Клиент</th>
+                        <th class="cart-table__column cart-table__column--product">Комментарий пользователя</th>
+                        <th class="cart-table__column cart-table__column--product">Контакты</th>
+                        <th class="cart-table__column cart-table__column--product">Дата и время</th>
+                        <th class="cart-table__column cart-table__column--product"></th>
+                        <th class="cart-table__column cart-table__column--product"></th>
+                    </tr>
+                </thead>
+                <tbody class="cart-table__body">
+                    {% for app in list_apps %}
+                        <tr class="cart-table__row">
+                            <td class="cart-table__column cart-table__column--product">{{app['user_name']}}</td>
+                            <td class="cart-table__column cart-table__column--product">{{app['user_comment']}}</td>
+                            <td class="cart-table__column cart-table__column--product">{{app['user_contact']}}</td>
+                            <td class="cart-table__column cart-table__column--product">{{app['app_time']}}</td>
+                            {% if app['is_not_use'] %}
+                                <td class="cart-table__column cart-table__column--product">
+                                    <a href="/static/organization_lid/{{org_id}}/appointment_success/{{app['app_id']}}">
+                                        <button type="button" class="btn btn-light btn-sm">
+                                            Подтвердить
+                                        </button>
+                                    </a>
+                                </td>
+                                <td class="cart-table__column cart-table__column--product">
+                                    <a href="/static/organization_lid/{{org_id}}/appointment_bad/{{app['app_id']}}">
+                                        <button type="button" class="btn btn-light btn-sm">
+                                            Отклонить
+                                        </button>
+                                    </a>
+                                </td>
+                            {% else %}
+                                <td class="cart-table__column cart-table__column--product">
+                                    <a href="/static/organization_lid/{{org_id}}/appointment_end/{{app['app_id']}}">
+                                        <button type="button" class="btn btn-light btn-sm">
+                                            Завершить
+                                        </button>
+                                    </a>
+                                </td>
+                                <td class="cart-table__column cart-table__column--product">
+                                    <a href="/static/organization_lid/{{org_id}}/appointment_bad/{{app['app_id']}}">
+                                        <button type="button" class="btn btn-light btn-sm">
+                                            Отклонить
+                                        </button>
+                                    </a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

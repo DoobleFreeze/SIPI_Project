@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site__body mt-5">
+    <div class="page-header">
+        <div class="page-header__container container">
+            <div class="page-header__title">
+                <h1>Организации</h1>
+            </div>
+        </div>
+    </div>
+    <div class="cart block">
+        <div class="container">
+            <table class="cart__table cart-table">
+                <thead class="cart-table__head">
+                <tr class="cart-table__row">
+                    <th class="cart-table__column cart-table__column--product">Название</th>
+                    <th class="cart-table__column cart-table__column--product"></th>
+                    <th class="cart-table__column cart-table__column--price"></th>
+                    <th class="cart-table__column cart-table__column--quantity"></th>
+                    <th class="cart-table__column cart-table__column--remove"></th>
+                    <th class="cart-table__column cart-table__column--remove"></th>
+                </tr>
+                </thead>
+                <tbody class="cart-table__body">
+                {% for org in list_orgs %}
+                <tr class="cart-table__row">
+                    <td class="cart-table__column cart-table__column--product">
+                        <a href="/static/organization/{{org['org_id']}}"
+                           class="cart-table__product-name">{{org['name']}}</a>
+                    </td>
+                    <td class="cart-table__column cart-table__column--product"></td>
+                    <td class="cart-table__column cart-table__column--price"></td>
+                    <td class="cart-table__column cart-table__column--remove">
+                        <a href="/static/organization_lid/{{org['org_id']}}/appointments">
+                            <button type="button" class="btn btn-light btn-sm">
+                                Записи
+                            </button>
+                        </a>
+                    </td>
+                    {% if org['is_admin'] %}
+                    <td class="cart-table__column cart-table__column--remove">
+                        <a href="/static/organization_lid/{{org['org_id']}}/employers">
+                            <button type="button" class="btn btn-light btn-sm">
+                                Сотрудники
+                            </button>
+                        </a>
+                    </td>
+                    <td class="cart-table__column cart-table__column--remove">
+                        <a href="/static/organization_lid/{{org['org_id']}}/lk">
+                            <button type="button" class="btn btn-light btn-sm">
+                                Редактирование
+                            </button>
+                        </a>
+                    </td>
+                    {% else %}
+                    <td class="cart-table__column cart-table__column--remove">
+
+                    </td>
+                    <td class="cart-table__column cart-table__column--remove">
+
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

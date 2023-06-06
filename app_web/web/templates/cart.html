@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="site__body mt-5">
+    <div class="page-header">
+        <div class="page-header__container container">
+            <div class="page-header__title">
+                <h1>Записи</h1>
+                <a href="/static/appointment_history">История записей</a>
+            </div>
+        </div>
+    </div>
+    <div class="cart block">
+        <div class="container">
+            <table class="cart__table cart-table">
+                <thead class="cart-table__head">
+                    <tr class="cart-table__row">
+                        <th class="cart-table__column cart-table__column--product">Название</th>
+                        <th class="cart-table__column cart-table__column--product">Комментарий</th>
+                        <th class="cart-table__column cart-table__column--product">Комментарий компании</th>
+                        <th class="cart-table__column cart-table__column--product">Дата и время</th>
+                        <th class="cart-table__column cart-table__column--product">Статус</th>
+                    </tr>
+                </thead>
+                <tbody class="cart-table__body">
+                    {% for app in list_apps %}
+                    <tr class="cart-table__row">
+                        <td class="cart-table__column cart-table__column--product">
+                            <a href="/static/organization/{{app['org_id']}}" class="cart-table__product-name">{{app['name']}}</a>
+                        </td>
+                        <td class="cart-table__column cart-table__column--product" data-title="Price">{{app['user_comment']}}</td>
+                        <td class="cart-table__column cart-table__column--product" data-title="Quantity">{{app['org_comment']}}</td>
+                        <td class="cart-table__column cart-table__column--product" data-title="Total">{{app['data_app']}}</td>
+                        <td class="cart-table__column cart-table__column--product" data-title="Remove">{{app['status']}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
