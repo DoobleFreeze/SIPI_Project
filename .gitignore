@@ -1,2 +1,3 @@
 .idea
 app_web/configs/.db.env
+app_web/web/static/uploads

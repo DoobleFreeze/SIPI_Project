@@ -19,6 +19,7 @@ from .webforms.appointmentform import AppointmentForm
 from .webforms.company_appointmentform import CompanyAppointmentForm
 from .webforms.company_appointment_badform import CompanyAppointmentBadForm
 from .webforms.employersform import EmployersForm
+from .webforms.companylkform import CompanyLkForm
 
 module = Blueprint('statics_page', __name__, url_prefix='/static')
 
@@ -68,7 +69,7 @@ def index():
                         "email": org.email,
                         "phone_number": org.phone_number,
                         "address": org.address,
-                        "image_path": org.image_path if org.image_path else "images/categories/category-1.jpg",
+                        "image_path": "/static/uploads/" + org.image_path.split(';')[0] if org.image_path else "images/categories/category-1.jpg",
                         "review": len(list_review),
                         'rating': rating,
                     }
@@ -106,7 +107,7 @@ def index():
                 "email": org.email,
                 "phone_number": org.phone_number,
                 "address": org.address,
-                "image_path": org.image_path if org.image_path else "images/categories/category-1.jpg",
+                "image_path": "/static/uploads/" + org.image_path.split(';')[0] if org.image_path else "images/categories/category-1.jpg",
                 "review": len(list_review),
                 'rating': rating,
             }
@@ -167,7 +168,7 @@ def index_sorted(sort_param):
                     "email": org.email,
                     "phone_number": org.phone_number,
                     "address": org.address,
-                    "image_path": org.image_path if org.image_path else "images/categories/category-1.jpg",
+                    "image_path": "/static/uploads/" + org.image_path.split(';')[0] if org.image_path else "images/categories/category-1.jpg",
                     "review": len(list_review),
                     "rating": rating,
                 }
@@ -205,7 +206,7 @@ def index_sorted(sort_param):
                     "email": org.email,
                     "phone_number": org.phone_number,
                     "address": org.address,
-                    "image_path": org.image_path if org.image_path else "images/categories/category-1.jpg",
+                    "image_path": "/static/uploads/" + org.image_path.split(';')[0] if org.image_path else "images/categories/category-1.jpg",
                     "review": len(list_review),
                     'rating': rating,
                 }
@@ -240,7 +241,7 @@ def index_sorted(sort_param):
                     "email": org.email,
                     "phone_number": org.phone_number,
                     "address": org.address,
-                    "image_path": org.image_path if org.image_path else "images/categories/category-1.jpg",
+                    "image_path": "/static/uploads/" + org.image_path.split(';')[0] if org.image_path else "images/categories/category-1.jpg",
                     "review": len(list_review),
                     "rating": rating
                 }
@@ -450,7 +451,7 @@ def lk():
             if session.query(al.users.Users).filter(al.users.Users.email == form.email.data,
                                                     al.users.Users.id != current_user.id).first():
                 return render_template('account-profile.html',
-                                       title='Регистрация',
+                                       title='Личный кабинет',
                                        is_organization=is_organization,
                                        form=form,
                                        h_form=headerform,
@@ -458,7 +459,7 @@ def lk():
             if session.query(al.users.Users).filter(al.users.Users.phone_number == form.phone_number.data,
                                                     al.users.Users.id != current_user.id).first():
                 return render_template('account-profile.html',
-                                       title='Регистрация',
+                                       title='Личный кабинет',
                                        is_organization=is_organization,
                                        form=form,
                                        h_form=headerform,
@@ -594,7 +595,7 @@ def organization(org_id):
         org_number = org_info.phone_number
         org_email = org_info.email
         if org_info.image_path:
-            imgs = org_info.image_path.split(";")
+            imgs = ["/static/uploads/" + i for i in org_info.image_path.split(";")]
         else:
             imgs = ["/static/images/products/product-16-1.jpg"] * 5
 
@@ -1140,6 +1141,7 @@ def appointment_end(org_id, app_id):
             ).first()
             appoint.status = "Завершено"
             appoint.org_user_id = current_user.id
+            session.commit()
             return redirect(f'/static/organization_lid/{org_id}/appointments')
         return redirect(f'/static/login')
     except Exception as e:
@@ -1226,6 +1228,67 @@ def organizations_lid_employers_del(org_id, user_id):
 
             return redirect(f'/static/organization_lid/{org_id}/employers')
 
+        return redirect(f'/static/login')
+    except Exception as e:
+        logger.error(LOG_ERROR.format(FUNC=f'static/organization/favorite method handler', ERROR=str(e)))
+        logger.debug(LOG_ERROR_DETAILS.format(ERROR=traceback.format_exc()))
+
+
+@module.route('/organization_lid/<int:org_id>/lk', methods=['GET', 'POST'])
+def organizations_lid_lk(org_id):
+    try:
+        if current_user.is_authenticated:
+            form = CompanyLkForm()
+            session = db_session.create_session()
+
+            available_groups = session.query(al.type_appointment.TypeAppointment).all()
+            groups_list = [(i.id, i.name) for i in available_groups]
+            groups_list.insert(0, (0, "Все категории"))
+            headerform = HeaderForm()
+            headerform.type_app.choices = groups_list.copy()
+            is_organization = False
+            if current_user.is_authenticated:
+                if session.query(al.organization.Organization).filter(
+                        al.organization.Organization.owner_id == current_user.id).all():
+                    is_organization = True
+                elif session.query(al.employees.Employees).filter(
+                        al.employees.Employees.user_id == current_user.id).all():
+                    is_organization = True
+
+            if form.validate_on_submit():
+                cur_org = session.query(al.organization.Organization).filter(
+                    al.organization.Organization.id == org_id
+                ).first()
+                cur_org.name = form.name.data
+                cur_org.about = form.about.data
+                cur_org.email = form.email.data
+                cur_org.phone_number = form.phone_number.data
+                cur_org.address = form.address.data
+                files_filenames = []
+                for file in form.avatars.data:
+                    file_filename = secure_filename(file.filename)
+                    file.save('web/static/uploads/' + f"{org_id}_" + file_filename)
+                    files_filenames.append(f"{org_id}_" + file_filename)
+                cur_org.image_path = ';'.join(files_filenames)
+
+                session.commit()
+                return redirect(f'/static/organization_lid/{org_id}/lk')
+
+            cur_org = session.query(al.organization.Organization).filter(
+                al.organization.Organization.id == org_id
+            ).first()
+            form.name.data = cur_org.name
+            form.about.data = cur_org.about
+            form.email.data = cur_org.email
+            form.phone_number.data = cur_org.phone_number
+            form.address.data = cur_org.address
+
+            return render_template("company.html",
+                                   h_form=headerform,
+                                   is_organization=is_organization,
+                                   title="Личный кабинет компании",
+                                   form=form
+                                   )
         return redirect(f'/static/login')
     except Exception as e:
         logger.error(LOG_ERROR.format(FUNC=f'static/organization/favorite method handler', ERROR=str(e)))
